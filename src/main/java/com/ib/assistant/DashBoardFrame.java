@@ -414,14 +414,14 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                 action = Types.Action.SELL;
             }
 
-            // currentMarketValue < 净资产总市值 x 基金占比
-            if (currentMarketValue < currentTQQQIdealAmount) {
-                show(String.format("执行加仓:当前TQQQ市场价格 {%s} 小于 {%s}(净资产总市值 x 基金占比)",
+            // currentMarketValue < 规划金额
+            if (currentMarketValue < currentConfig.getPlanAmount()) {
+                show(String.format("执行加仓:当前TQQQ市场价格 {%s} 小于 {%s}(规划金额)",
                         String.valueOf(currentMarketValue),
                         String.valueOf(currentTQQQIdealAmount)
                 ));
-                double compareValue1 = (currentTQQQIdealAmount - currentMarketValue) * currentConfig.getAddRate();
-                show(String.format("市值1(((净资产总市值 x 基金占比) - 基金市值) x 加仓比例):{%s} (((净资产总市值{%s} x 基金占比{%s}) - 基金市值{%s}) x 加仓比例{%s}) ",
+                double compareValue1 = (currentConfig.getPlanAmount() - currentMarketValue) * currentConfig.getAddRate();
+                show(String.format("市值1((规划金额 - 基金市值) x 加仓比例):{%s} (((净资产总市值{%s} x 基金占比{%s}) - 基金市值{%s}) x 加仓比例{%s}) ",
                         String.valueOf(compareValue1),
                         String.valueOf(account.getNetLiquidation()),
                         String.valueOf(currentConfig.getFundRate()),
