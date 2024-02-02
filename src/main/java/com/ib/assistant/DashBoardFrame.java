@@ -386,6 +386,9 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                         String.valueOf(df.format(currentConfig.getPlanAmount()))
                 ));
                 currentConfig.setPlanAmount(currentTQQQIdealAmount);
+                configurationPanel.planAmtField.setText(df.format(currentTQQQIdealAmount));
+                configurationPanel.updateConfig(currentConfig);
+
             }
 
             // 初始化订单
@@ -442,10 +445,10 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                 }
 
                 if (compareValue1 < compareValue2) {
-                    show("加仓金额为市值1: " + compareValue1);
+                    show("加仓金额为市值1: " + df.format(compareValue1));
                     diff = compareValue1;
                 } else {
-                    show("加仓金额为市值2: " + compareValue2);
+                    show("加仓金额为市值2: " + df.format(compareValue2));
                     diff = compareValue2;
                 }
 
