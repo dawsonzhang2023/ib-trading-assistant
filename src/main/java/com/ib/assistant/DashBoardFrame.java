@@ -354,7 +354,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                 return;
             }
             IBAccount account = getAccountInfo();
-            if (account == null || !m_acctList.get(0).endsWith(String.valueOf(currentConfig.getClientId()))  || currentConfig.getClientId()==0) {
+            if (account == null || account.getAccountID() == null || !m_acctList.get(0).endsWith(String.valueOf(currentConfig.getClientId()))  || currentConfig.getClientId()==0) {
                 show("用户编号与TWS用户不一致，不执行任何操作！ TWS用户编号:");
                 return;
             }
