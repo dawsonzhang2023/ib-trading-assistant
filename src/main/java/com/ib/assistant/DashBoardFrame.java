@@ -25,6 +25,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -353,7 +354,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                 return;
             }
             IBAccount account = getAccountInfo();
-            if (account == null || !m_acctList.get(0).endsWith(String.valueOf(currentConfig.getClientId()))  || currentConfig.getClientId()==0) {
+            if (account == null || account.getAccountID() == null || !m_acctList.get(0).endsWith(String.valueOf(currentConfig.getClientId()))  || currentConfig.getClientId()==0) {
                 show("用户编号与TWS用户不一致，不执行任何操作！ TWS用户编号:");
                 return;
             }
@@ -364,7 +365,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                 show("仍有待执行订单，暂不操作!");
                 return;
             }
-
+            DecimalFormat df = new DecimalFormat("0.00");
             // 仓位验证
             List<IbPosition> positions = positionManager.getIbPositions();
             // Get ETF  position
@@ -375,17 +376,19 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
             //  (净资产总市值 x 基金占比)，大于现有规划金额，则将其重置为规划金额
             double currentTQQQIdealAmount = account.getNetLiquidation() * currentConfig.getFundRate();
             show(String.format("TQQQ规划市值(净资产总市值 x 基金占比)%s = 净资产总市值%s * 基金占比 %s ",
-                    String.valueOf(currentTQQQIdealAmount),
-                    String.valueOf(account.getNetLiquidation()),
-                    String.valueOf(currentConfig.getFundRate())
+                    String.valueOf(df.format(currentTQQQIdealAmount)),
+                    String.valueOf(df.format(account.getNetLiquidation())),
+                    String.valueOf(df.format(currentConfig.getFundRate()))
             ));
             if (currentTQQQIdealAmount > currentConfig.getPlanAmount()) {
-                show(String.format("重置最新规划金额为 {%s} :TQQQ规划市值大于 {%s} 原有规划金额 {%s}",
-                        String.valueOf(currentTQQQIdealAmount),
-                        String.valueOf(currentConfig.getPlanAmount()),
-                        String.valueOf(currentConfig.getPlanAmount())
+                show(String.format("重置最新规划金额为 {%s} : 原有规划金额 {%s}",
+                        String.valueOf(df.format(currentTQQQIdealAmount)),
+                        String.valueOf(df.format(currentConfig.getPlanAmount()))
                 ));
                 currentConfig.setPlanAmount(currentTQQQIdealAmount);
+                configurationPanel.planAmtField.setText(df.format(currentTQQQIdealAmount));
+                configurationPanel.updateConfig(currentConfig);
+
             }
 
             // 初始化订单
@@ -395,18 +398,18 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
             // 基金市值高于最新规划金额的部分，为本次减仓金额。
             double currentMarketValue = currentTQQQETFPosition * marketDataManger.getLastPrice();
             show(String.format("当前TQQQ市场金额: {%s}. 当前持仓： {%s} 当前市场价格： {%s}",
-                    String.valueOf(currentMarketValue),
-                    String.valueOf(currentTQQQETFPosition),
-                    String.valueOf(marketDataManger.getLastPrice())
+                    String.valueOf(df.format(currentMarketValue)),
+                    String.valueOf(df.format(currentTQQQETFPosition)),
+                    String.valueOf(df.format(marketDataManger.getLastPrice()))
             ));
 
             if (currentMarketValue > currentConfig.getPlanAmount()) {
                 show(String.format("执行减仓:当前TQQQ市场价格{%s}大于{%s}最新规划金额",
-                        String.valueOf(currentMarketValue),
-                        String.valueOf(currentConfig.getPlanAmount())
+                        String.valueOf(df.format(currentMarketValue)),
+                        String.valueOf(df.format(currentConfig.getPlanAmount()))
                 ));
                 diff = currentMarketValue - currentConfig.getPlanAmount();
-                show(String.format("需要减仓金额为: 最新市值-最新规划金额{%s}", String.valueOf(diff)));
+                show(String.format("需要减仓金额为: 最新市值-最新规划金额{%s}", String.valueOf(df.format(diff))));
                 if (diff < 100) {
                     show("金额差异小于100，不执行任何操作");
                     return;
@@ -414,26 +417,26 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                 action = Types.Action.SELL;
             }
 
-            // currentMarketValue < 净资产总市值 x 基金占比
-            if (currentMarketValue < currentTQQQIdealAmount) {
-                show(String.format("执行加仓:当前TQQQ市场价格 {%s} 小于 {%s}(净资产总市值 x 基金占比)",
-                        String.valueOf(currentMarketValue),
-                        String.valueOf(currentTQQQIdealAmount)
+            // currentMarketValue < 规划金额
+            if (currentMarketValue < currentConfig.getPlanAmount()) {
+                show(String.format("执行加仓:当前TQQQ市场价格 {%s} 小于 {%s}(规划金额)",
+                        String.valueOf(df.format(currentMarketValue)),
+                        String.valueOf(df.format(currentTQQQIdealAmount))
                 ));
-                double compareValue1 = (currentTQQQIdealAmount - currentMarketValue) * currentConfig.getAddRate();
-                show(String.format("市值1(((净资产总市值 x 基金占比) - 基金市值) x 加仓比例):{%s} (((净资产总市值{%s} x 基金占比{%s}) - 基金市值{%s}) x 加仓比例{%s}) ",
-                        String.valueOf(compareValue1),
-                        String.valueOf(account.getNetLiquidation()),
-                        String.valueOf(currentConfig.getFundRate()),
-                        String.valueOf(currentMarketValue),
-                        String.valueOf(currentConfig.getAddRate())
+                // ((规划金额 - 基金市值) x 加仓比例)
+                double compareValue1 = (currentConfig.getPlanAmount() - currentMarketValue) * currentConfig.getAddRate();
+                show(String.format("市值1((规划金额 - 基金市值) x 加仓比例):{%s} ((规划金额{%s}  - 基金市值{%s}) x 加仓比例{%s}) ",
+                        String.valueOf(df.format(compareValue1)),
+                        String.valueOf(df.format(currentConfig.getPlanAmount())),
+                        String.valueOf(df.format(currentMarketValue)),
+                        String.valueOf(df.format(currentConfig.getAddRate()))
                 ));
 
                 double compareValue2 = account.getTotalCash() + currentConfig.getDebtLimit();
                 show(String.format("市值2(现金总市值 + 负债上限)：{%s} 现金总市值{%s} + 负债上限{%s}",
-                        String.valueOf(compareValue2),
-                        String.valueOf(account.getTotalCash()),
-                        String.valueOf(currentConfig.getDebtLimit()))
+                        String.valueOf(df.format(compareValue2)),
+                        String.valueOf(df.format(account.getTotalCash())),
+                        String.valueOf(df.format(currentConfig.getDebtLimit())))
                 );
 
                 if (compareValue2 < 0) {
@@ -442,10 +445,10 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                 }
 
                 if (compareValue1 < compareValue2) {
-                    show("加仓金额为市值1: " + compareValue1);
+                    show("加仓金额为市值1: " + df.format(compareValue1));
                     diff = compareValue1;
                 } else {
-                    show("加仓金额为市值2: " + compareValue2);
+                    show("加仓金额为市值2: " + df.format(compareValue2));
                     diff = compareValue2;
                 }
 

@@ -2,10 +2,9 @@
   <artifact type="jar" build-on-make="true" name="ib-trading-assistant:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/ib_trading_assistant_jar</output-path>
     <root id="archive" name="ib-trading-assistant.jar">
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
-      </element>
       <element id="module-output" name="ib-trading-assistant" />
+      <element id="file-copy" path="$PROJECT_DIR$/tqqq.cfg.properties" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/Ib_logo.png" />
     </root>
   </artifact>
 </component>

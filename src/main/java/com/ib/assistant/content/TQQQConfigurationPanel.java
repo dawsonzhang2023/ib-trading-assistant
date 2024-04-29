@@ -17,7 +17,7 @@ public class TQQQConfigurationPanel extends Panel {
 
     private JTextField triggerRateField = null;
 
-    private JTextField planAmtField = null;
+    public JTextField planAmtField = null;
 
     private JTextField fundingRateField = null;
 
