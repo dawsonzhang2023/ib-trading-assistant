@@ -28,7 +28,7 @@ public class ContentPanel extends JPanel {
 
     public ContentPanel() {
         disclourePanel = new JScrollPane();
-        disclourePanel.setPreferredSize( new Dimension(1600 , 500 ));
+        disclourePanel.setPreferredSize( new Dimension(800 , 500 ));
         disclourePanel.add( new DisclouseArea());
 
         configPanel = new TQQQConfigurationPanel();
@@ -37,9 +37,9 @@ public class ContentPanel extends JPanel {
 
         marketDataPanel = new IBMarketDataPanel();
         JTabbedPane  tab =  new JTabbedPane();
-        tab.setPreferredSize(new Dimension(1600 , 500));
+        tab.setPreferredSize(new Dimension(780 , 500));
         DisclouseArea  disclouseArea = new DisclouseArea();
-        disclouseArea.setPreferredSize( new Dimension(1590 , 300));
+        disclouseArea.setPreferredSize( new Dimension(780 , 300));
         tab.addTab( "用户须知 Disclaimer" , new DisclouseArea() );
 
         tw=new JPanel();

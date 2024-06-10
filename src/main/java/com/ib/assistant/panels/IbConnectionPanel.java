@@ -36,7 +36,7 @@ public class IbConnectionPanel extends JPanel {
 
     public IbConnectionPanel() {
 
-        setLayout(new GridLayout());
+        setLayout(new BorderLayout());
         if (m_connectionConfiguration == null)
             m_connectionConfiguration = new IConnectionConfiguration.DefaultConnectionConfiguration();
 
@@ -48,7 +48,7 @@ public class IbConnectionPanel extends JPanel {
 
 
         connectButton = new JButton("连接");
-        connectButton.setPreferredSize(new Dimension( 100 ,  40));
+        connectButton.setPreferredSize(new Dimension( 100 ,  30));
        /* JButton disconnect = new JButton("Disconnect") {
             @Override
             public void actionPerformed() {
@@ -70,7 +70,7 @@ public class IbConnectionPanel extends JPanel {
         JPanel p2 = new VerticalPanel();
         p2.add(connectButton);
         //p2.add( disconnect);
-        p2.add(Box.createVerticalStrut(20));
+        p2.add(Box.createVerticalStrut(40));
 
         JPanel p3 = new VerticalPanel();
         p3.setBorder(new EmptyBorder(20, 0, 0, 0));
@@ -78,7 +78,7 @@ public class IbConnectionPanel extends JPanel {
 
         JPanel p4 = new JPanel(new BorderLayout());
         p4.add(p1, BorderLayout.WEST);
-        p4.add(p2);
+        p4.add(p2, BorderLayout.EAST);
         p4.add(p3, BorderLayout.SOUTH);
 
         setLayout(new BorderLayout());

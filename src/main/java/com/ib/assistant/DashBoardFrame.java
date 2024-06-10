@@ -173,7 +173,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
 
     public DashBoardFrame() throws HeadlessException {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1640, 1000);
+        setSize(800, 1000);
         setLayout(new BorderLayout());
 
 
@@ -209,7 +209,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
 
     public void initComponent() {
         contentPanel = new ContentPanel();
-        contentPanel.setPreferredSize(new Dimension(1610, 500));
+        contentPanel.setPreferredSize(new Dimension(800, 500));
         Border margin = new EmptyBorder(5, 5, 5, 5);
         contentPanel.setBorder(margin);
         IbConnectionPanel connectionPanel = headerPanel.getConnectionPanel();

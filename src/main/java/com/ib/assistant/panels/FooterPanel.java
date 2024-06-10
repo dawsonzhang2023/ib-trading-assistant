@@ -33,9 +33,9 @@ public class FooterPanel extends JPanel {
 
     public FooterPanel() {
 
-        setPreferredSize(new Dimension(1600, 300));
+        setPreferredSize(new Dimension(800, 300));
         setLayout( new BorderLayout());
-        Border b = new EmptyBorder(10 , 10 , 10 , 10 );
+        Border b = new EmptyBorder(5 , 5 , 5 , 5 );
         setBorder(b);
 
         m_msg = new JTextArea();
@@ -66,7 +66,7 @@ public class FooterPanel extends JPanel {
         //inLogScroll.setPreferredSize(new Dimension(1600, 200));
 
         JTabbedPane bot = new JTabbedPane();
-        bot.setPreferredSize(new Dimension(1600 , 200));
+        bot.setPreferredSize(new Dimension(800 , 200));
         bot.addTab("Messages", msgScroll);
         bot.addTab("Log (out)", outLogScroll);
         bot.addTab("Log (in)", inLogScroll);
