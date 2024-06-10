@@ -152,13 +152,13 @@ public class TQQQConfigurationPanel extends Panel {
         });
         panelCenter.add(saveButton);
         add(inputPanel, BorderLayout.WEST);
-        panelCenter.setPreferredSize(new Dimension(1600, 40));
+        panelCenter.setPreferredSize(new Dimension(800, 40));
         add(panelCenter, BorderLayout.CENTER);
 
         JPanel panel2 = new JPanel();
         //panel2.setPreferredSize(new Dimension(1600 , 300));
         DisclouseArea dArea = new DisclouseArea();
-        dArea.setPreferredSize(new Dimension(1590, 300));
+        dArea.setPreferredSize(new Dimension(780, 300));
         panel2.add(dArea);
         add(panel2, BorderLayout.SOUTH);
 

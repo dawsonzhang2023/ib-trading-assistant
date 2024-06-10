@@ -19,6 +19,7 @@ public class DisclouseArea extends JTextArea {
 
         setText( disclouseContent );
         setLineWrap(true);
+        setMargin(new Insets(10, 10, 10, 10));
         //System.out.println("Finished init DisclouseArea");
     }
 }

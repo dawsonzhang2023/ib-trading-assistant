@@ -23,7 +23,7 @@ public class IBMarketDataPanel extends JPanel {
     public IBMarketDataPanel() {
 
         dataModel = new MarketDataModel();
-        setPreferredSize(new Dimension(1600, 200));
+        setPreferredSize(new Dimension(800, 120));
         setLayout(new GridLayout(4, 1));
         marketDateTable = new JTable(dataModel);
         //marketDateTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -33,7 +33,7 @@ public class IBMarketDataPanel extends JPanel {
        cellRenderer.setHorizontalAlignment( SwingConstants.CENTER );
        marketDateTable.setDefaultRenderer(Boolean.class , cellRenderer);
         add(marketDateTable.getTableHeader());
-        marketDateTable.getTableHeader().setPreferredSize(new Dimension(1600, 50));
+        marketDateTable.getTableHeader().setPreferredSize(new Dimension(800, 50));
         //marketDateTable.setAutoscrolls(true);
 
 
