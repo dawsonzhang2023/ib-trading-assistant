@@ -27,27 +27,30 @@ public class ContentPanel extends JPanel {
     }
 
     public ContentPanel() {
+        setLayout(new BorderLayout());
+
         disclourePanel = new JScrollPane();
-        disclourePanel.setPreferredSize( new Dimension(800 , 500 ));
         disclourePanel.add( new DisclouseArea());
 
         configPanel = new TQQQConfigurationPanel();
-
-
-
         marketDataPanel = new IBMarketDataPanel();
         JTabbedPane  tab =  new JTabbedPane();
-        tab.setPreferredSize(new Dimension(780 , 500));
+
+        // 获取屏幕尺寸并设置组件大小
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) (screenSize.width * 0.8);
+        int height = (int) (screenSize.height * 0.5);
+        tab.setPreferredSize(new Dimension(width, height));
+
         DisclouseArea  disclouseArea = new DisclouseArea();
-        disclouseArea.setPreferredSize( new Dimension(780 , 300));
+        disclouseArea.setPreferredSize(new Dimension(width, height / 2));
         tab.addTab( "用户须知 Disclaimer" , new DisclouseArea() );
 
-        tw=new JPanel();
-        tw.add( marketDataPanel);
-        tw.add(disclouseArea);
+        tw = new JPanel(new BorderLayout());
+        tw.add(marketDataPanel);
 
         tab.addTab(  "市场数据 Market Data" , tw);
         tab.addTab( "配置文件 Configuration" ,  configPanel );
-        add( tab );
+        add(tab, BorderLayout.CENTER);
     }
 }

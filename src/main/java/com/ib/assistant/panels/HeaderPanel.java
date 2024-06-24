@@ -25,7 +25,7 @@ public class HeaderPanel extends JPanel {
 
         JPanel   leftHeader = new JPanel( new GridLayout(2 , 1));
         JLabel label = new JLabel();
-        label.setText(" 自管式智能化指数系统 Self-Directed Intelligent Index Assistant V 2.2.1");
+        label.setText(" 自管式智能化指数系统 Self-Directed Intelligent Index Assistant V 2.2.2 Beta");
         label.setBackground(Color.white);
         label.setFont(new Font("仿宋", Font.BOLD, 15));
         label.setHorizontalAlignment(JLabel.LEFT);

@@ -174,7 +174,11 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
 
     public DashBoardFrame() throws HeadlessException {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 1000);
+        // 获取屏幕尺寸并设置窗口大小
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) (screenSize.width * 0.8);
+        int height = (int) (screenSize.height * 0.8);
+        setSize(width, height);
         setLayout(new BorderLayout());
 
 

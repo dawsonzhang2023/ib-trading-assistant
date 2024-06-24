@@ -98,10 +98,11 @@ public class TQQQConfigurationPanel extends Panel {
     }
 
     public TQQQConfigurationPanel() {
+        setLayout(new BorderLayout());
 
         JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(6, 2));
-        //inputPanel.setPreferredSize(new Dimension(1600, 200));
+        //inputPanel.setLayout(new GridLayout(6, 2));
+        inputPanel.setLayout(new GridLayout(6, 2, 5, 5));  // 添加行间距和列间距
 
         JLabel label1 = new JLabel("当前价格 Market Price");
         JLabel label2 = new JLabel("触发比例 Trigger Ratio");
@@ -118,12 +119,21 @@ public class TQQQConfigurationPanel extends Panel {
         label6.setBackground(Color.white);
 
         //  config  ref  price
-        refPriceField = new JTextField(20);
-        triggerRateField = new JTextField(20);
-        planAmtField = new JTextField(20);
-        fundingRateField = new JTextField(20);
-        additionRateField = new JTextField(20);
-        debtLimitField = new JTextField(20);
+        refPriceField = new JTextField(15);
+        triggerRateField = new JTextField(15);
+        planAmtField = new JTextField(15);
+        fundingRateField = new JTextField(15);
+        additionRateField = new JTextField(15);
+        debtLimitField = new JTextField(15);
+
+        // 设置 JTextField 的首选高度
+        Dimension textFieldSize = new Dimension(refPriceField.getPreferredSize().width, 25);
+        refPriceField.setPreferredSize(textFieldSize);
+        triggerRateField.setPreferredSize(textFieldSize);
+        planAmtField.setPreferredSize(textFieldSize);
+        fundingRateField.setPreferredSize(textFieldSize);
+        additionRateField.setPreferredSize(textFieldSize);
+        debtLimitField.setPreferredSize(textFieldSize);
 
         inputPanel.add(label1);
         inputPanel.add(refPriceField);
@@ -152,15 +162,14 @@ public class TQQQConfigurationPanel extends Panel {
         });
         panelCenter.add(saveButton);
         add(inputPanel, BorderLayout.WEST);
-        panelCenter.setPreferredSize(new Dimension(800, 40));
+        //panelCenter.setPreferredSize(new Dimension(800, 40));
         add(panelCenter, BorderLayout.CENTER);
 
-        JPanel panel2 = new JPanel();
-        //panel2.setPreferredSize(new Dimension(1600 , 300));
-        DisclouseArea dArea = new DisclouseArea();
-        dArea.setPreferredSize(new Dimension(780, 300));
-        panel2.add(dArea);
-        add(panel2, BorderLayout.SOUTH);
+        // 获取屏幕尺寸并设置组件大小
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) (screenSize.width * 0.8);
+        int height = (int) (screenSize.height * 0.1);
+        setPreferredSize(new Dimension(width, height));
 
     }
 
