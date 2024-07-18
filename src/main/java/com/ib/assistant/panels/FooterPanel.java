@@ -31,9 +31,9 @@ public class FooterPanel extends JPanel {
 
     private HtmlButton  clearBtn;
 
-    public FooterPanel() {
+    public FooterPanel(int width, int height) {
 
-        setPreferredSize(new Dimension(800, 300));
+        setPreferredSize(new Dimension(width, (int) (height*0.3)));
         setLayout( new BorderLayout());
         Border b = new EmptyBorder(5 , 5 , 5 , 5 );
         setBorder(b);

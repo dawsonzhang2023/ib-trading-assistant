@@ -182,8 +182,8 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
         setLayout(new BorderLayout());
 
 
-        headerPanel = new HeaderPanel(this);
-        footerPanel = new FooterPanel();
+        headerPanel = new HeaderPanel(this, width, height);
+        footerPanel = new FooterPanel(width, height);
         add(headerPanel, BorderLayout.NORTH);
         add(footerPanel, BorderLayout.SOUTH);
 
@@ -214,7 +214,11 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
 
     public void initComponent() {
         contentPanel = new ContentPanel();
-        contentPanel.setPreferredSize(new Dimension(800, 500));
+        // 获取屏幕尺寸并设置窗口大小
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) (screenSize.width * 0.8);
+        int height = (int) (screenSize.height * 0.8);
+        contentPanel.setPreferredSize(new Dimension(width, height-footerPanel.getHeight()-headerPanel.getHeight()));
         Border margin = new EmptyBorder(5, 5, 5, 5);
         contentPanel.setBorder(margin);
         IbConnectionPanel connectionPanel = headerPanel.getConnectionPanel();
