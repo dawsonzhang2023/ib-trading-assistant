@@ -222,7 +222,6 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
         Border margin = new EmptyBorder(5, 5, 5, 5);
         contentPanel.setBorder(margin);
         IbConnectionPanel connectionPanel = headerPanel.getConnectionPanel();
-
         contentPanel.getConfigPanel().setClientIdField(connectionPanel.m_clientId);
         try {
             contentPanel.getConfigPanel().loadConfiguration();

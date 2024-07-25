@@ -37,10 +37,8 @@ public class HeaderPanel extends JPanel {
         //leftHeader.add(labelEnglish);
         leftHeader.add(controlsPanel);
 
-
-
         connectionPanel= new IbConnectionPanel();
-        connectionPanel.setPreferredSize(new Dimension(400, 150));
+        connectionPanel.setPreferredSize(new Dimension(400, 100));
         add(leftHeader);
         add(connectionPanel);
 

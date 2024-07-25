@@ -56,11 +56,14 @@ public class IbConnectionPanel extends JPanel {
             }
         };*/
 
-        JPanel p1 = new VerticalPanel();
-        p1.add("服务器 Server", m_host);
-        p1.add("端口 Port", m_port);
+        JPanel p1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        p1.add(new JLabel("服务器 Server"));
+        p1.add(m_host);
+        p1.add(new JLabel("端口 Port"));
+        p1.add(m_port);
+        p1.add(new JLabel("Account ID"));
         m_clientId = new JTextField("0", 7);
-        p1.add("Account ID", m_clientId);
+        p1.add(m_clientId);
         if (m_connectionConfiguration.getDefaultConnectOptions() != null) {
             p1.add("Connect options", m_connectOptionsTF);
         }
@@ -83,8 +86,5 @@ public class IbConnectionPanel extends JPanel {
 
         setLayout(new BorderLayout());
         add(p4, BorderLayout.NORTH);
-
     }
-
-
 }
