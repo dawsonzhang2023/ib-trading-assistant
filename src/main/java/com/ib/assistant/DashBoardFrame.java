@@ -33,6 +33,10 @@ import java.util.Set;
 import java.util.concurrent.Future;
 import java.util.function.Predicate;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class DashBoardFrame extends JFrame implements ApiController.IConnectionHandler {
 
@@ -137,6 +141,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
             m_msg.scrollRectToVisible(new Rectangle(0, d.height, 1, 1));
         });
         m_inLogger.log(message);
+        logger.log(Level.INFO, message);
     }
 
     private static class Logger implements ApiConnection.ILogger {
@@ -160,6 +165,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
 
     private Logger m_inLogger = null;
     private Logger m_outLogger = null;
+    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(DashBoardFrame.class);
 
     private HeaderPanel headerPanel = null;
 
