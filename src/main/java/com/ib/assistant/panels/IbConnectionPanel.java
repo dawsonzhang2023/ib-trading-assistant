@@ -15,7 +15,7 @@ public class IbConnectionPanel extends JPanel {
 
     public JTextField m_clientId = null;
 
-    private JLabel m_status = new JLabel("中断 Disconnected");
+    private JLabel m_status = new JLabel("中断");
 
     public JButton connectButton = null;
 
@@ -67,16 +67,17 @@ public class IbConnectionPanel extends JPanel {
         if (m_connectionConfiguration.getDefaultConnectOptions() != null) {
             p1.add("Connect options", m_connectOptionsTF);
         }
-        p1.add("", m_defaultPortNumberLabel);
-        p1.add("" , expireDateLabel );
+        p1.add(connectButton);
+        //p1.add("", m_defaultPortNumberLabel);
+        //p1.add("" , expireDateLabel );
 
         JPanel p2 = new VerticalPanel();
-        p2.add(connectButton);
+        //p2.add(connectButton);
         //p2.add( disconnect);
-        p2.add(Box.createVerticalStrut(40));
+        //p2.add(Box.createVerticalStrut(40));
 
         JPanel p3 = new VerticalPanel();
-        p3.setBorder(new EmptyBorder(20, 0, 0, 0));
+        p3.setBorder(new EmptyBorder(0, 0, 0, 0));
         p3.add("连接状态 Connection status: ", m_status);
 
         JPanel p4 = new JPanel(new BorderLayout());

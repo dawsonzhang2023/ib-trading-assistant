@@ -136,6 +136,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
             Dimension d = m_msg.getSize();
             m_msg.scrollRectToVisible(new Rectangle(0, d.height, 1, 1));
         });
+        m_inLogger.log(message);
     }
 
     private static class Logger implements ApiConnection.ILogger {
@@ -176,7 +177,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // 获取屏幕尺寸并设置窗口大小
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = (int) (screenSize.width * 0.8);
+        int width = (int) (screenSize.width * 0.75);
         int height = (int) (screenSize.height * 0.8);
         setSize(width, height);
         setLayout(new BorderLayout());
