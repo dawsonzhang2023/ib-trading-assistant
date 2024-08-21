@@ -38,3 +38,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/out/artifacts/ib_trading_assistant_jar/ib_logo_2015.ico
+/out/artifacts/ib_trading_assistant_jar/log4j2.xml
+/out/artifacts/ib_trading_assistant_jar/tqqq.cfg.properties
+/.idea/vcs.xml
