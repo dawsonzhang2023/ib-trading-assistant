@@ -5,18 +5,18 @@ import com.ib.assistant.configuration.TQQQConfiguration;
 import com.ib.assistant.content.TQQQConfigurationPanel;
 import com.ib.assistant.market.IBMarketDataPanel;
 import com.ib.assistant.market.MarketDataManger;
-import com.ib.assistant.market.MarketDataUtil;
 import com.ib.assistant.message.AccountSummaryMessage;
 import com.ib.assistant.message.IBAccount;
 import com.ib.assistant.message.IbPosition;
 import com.ib.assistant.panels.*;
-import com.ib.assistant.ui.OrderAction;
 import com.ib.client.*;
 import com.ib.contracts.ETFContractFactory;
 import com.ib.controller.AccountSummaryTag;
 import com.ib.controller.ApiConnection;
 import com.ib.controller.ApiController;
 import com.ib.controller.Formats;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -29,17 +29,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.Future;
 import java.util.function.Predicate;
-
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 
 public class DashBoardFrame extends JFrame implements ApiController.IConnectionHandler {
-
 
     private ApiController m_controller;
 
@@ -307,7 +300,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                     controller().reqMktDataType(3);
                     controller().reqTopMktData(contract, "", false, false, tickPriceHandler);
                     positionManager.getIbPositions();
-                    accountManager.getAccountSummary();
+                    //IBAccount account = getAccountInfo();
                     openOrdersManager.getOpenOrderInfo();
                 }
             }
@@ -358,6 +351,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
 
         synchronized (executionLock) {
             if (isExecuting) {
+                show("程序正在运行，停止调整仓位！");
                 return;
             }
             isExecuting = true;
@@ -553,8 +547,8 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
         return orderInfoList.stream().filter(new Predicate<OpenOrdersManager.OpenOrderInfo>() {
             @Override
             public boolean test(OpenOrdersManager.OpenOrderInfo openOrderInfo) {
-                return symbol.equals(openOrderInfo.OpenOrderContract.symbol())
-                        && "STK".equals(openOrderInfo.OpenOrderContract.getSecType())
+                return symbol.equals(openOrderInfo.getOpenOrderContract().symbol())
+                        && "STK".equals(openOrderInfo.getOpenOrderContract().getSecType())
                         ;
             }
         }).count() > 0;
