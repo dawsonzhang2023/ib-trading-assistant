@@ -250,7 +250,14 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                     marketDataManger.updateDataView(contract, tickType, price, attribs, currentConfig);
                     if (price >= currentConfig.getUpTriggerPrice() || price <= currentConfig.getDownTriggerPrice()) {
                         // 大于上限 或者 小于下限 调整仓位
-                        adjustPosition();
+                        show("价格触发调仓");
+
+                       // adjustPosition();
+                        accountManager.getAccountSummaryAsync(acctMassages -> {
+                            // 在这里进行调仓操作
+                            // adjustPosition();
+                            IBAccount account = GetAccount(acctMassages);
+                        });
                     }
                 }
             }
@@ -299,14 +306,18 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                     Contract contract = ETFContractFactory.getInstance().getContractBySymbol(symbol);
                     controller().reqMktDataType(3);
                     controller().reqTopMktData(contract, "", false, false, tickPriceHandler);
-                    positionManager.getIbPositions();
-                    //IBAccount account = getAccountInfo();
-                    openOrdersManager.getOpenOrderInfo();
+                    accountManager.getAccountSummaryAsync(acctMassages -> {
+                        IBAccount account = GetAccount(acctMassages);
+                        positionManager.getIbPositionsAsync(positions -> {
+                            openOrdersManager.getOpenOrderInfoAsync(openOrderInfos -> {
+
+                            });
+                        });
+                    });
+
                 }
             }
         });
-
-
         controlsPanel.getPauseButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -337,6 +348,14 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
 
     private void adjustPosition() {
         show("*************开始仓位调整*************");
+        synchronized (executionLock) {
+            if (isExecuting) {
+                show("程序正在运行，不执行重复调用！");
+                return;
+            }
+            isExecuting = true;
+        }
+
         TQQQConfigurationPanel configurationPanel = contentPanel.getConfigPanel();
 
         TQQQConfiguration currentConfig = null;
@@ -347,15 +366,10 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
             return;
         }
 
-        if (!verifyTQQQConfiguration(currentConfig)) return;
-
-        synchronized (executionLock) {
-            if (isExecuting) {
-                show("程序正在运行，停止调整仓位！");
-                return;
-            }
-            isExecuting = true;
+        if (!verifyTQQQConfiguration(currentConfig)) {
+            return;
         }
+
         try {
             if (marketDataManger.getLastPrice() == 0) {
                 show("无效价格，不执行任何操作！");
@@ -367,9 +381,8 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                 return;
             }
             // "已经存在待执行订单，暂时退出等待..."
-            boolean hasPendingOrder = isPendingOrder(symbol);
+            boolean hasPendingOrder = isPendingOrder(symbol, account.getAccountID());
             if (hasPendingOrder) {
-                show("已经存在待执行订单，暂时退出等待...");
                 show("仍有待执行订单，暂不操作!");
                 return;
             }
@@ -378,7 +391,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
             List<IbPosition> positions = positionManager.getIbPositions();
             // Get ETF  position
             Long currentTQQQETFPosition = positions.stream().filter(p -> {
-                return (symbol.equals(p.getContract().symbol()) && "STK".equals(p.getContract().getSecType()));
+                return (symbol.equals(p.getContract().symbol()) && "STK".equals(p.getContract().getSecType()) && account.getAccountID().equals(p.getAccountID()));
             }).mapToLong(p -> p.getPosition().longValue()).sum();
 
             //  (净资产总市值 x 基金占比)，大于现有规划金额，则将其重置为规划金额
@@ -396,7 +409,6 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                 currentConfig.setPlanAmount(currentTQQQIdealAmount);
                 configurationPanel.planAmtField.setText(df.format(currentTQQQIdealAmount));
                 configurationPanel.updateConfig(currentConfig);
-
             }
 
             // 初始化订单
@@ -495,7 +507,6 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                 show("配置文件保存错误:" + e.getMessage());
             }
         }
-
     }
 
     private boolean verifyTQQQConfiguration(TQQQConfiguration currentConfig) {
@@ -541,7 +552,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
     }
 
     //"已经存在待执行订单，暂时退出等待..."
-    private boolean isPendingOrder(String symbol) {
+    private boolean isPendingOrder(String symbol, String accountId) {
 
         List<OpenOrdersManager.OpenOrderInfo> orderInfoList = openOrdersManager.getOpenOrderInfo();
         return orderInfoList.stream().filter(new Predicate<OpenOrdersManager.OpenOrderInfo>() {
@@ -549,6 +560,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
             public boolean test(OpenOrdersManager.OpenOrderInfo openOrderInfo) {
                 return symbol.equals(openOrderInfo.getOpenOrderContract().symbol())
                         && "STK".equals(openOrderInfo.getOpenOrderContract().getSecType())
+                        && accountId.equals(openOrderInfo.getOpenOrder().account())
                         ;
             }
         }).count() > 0;
@@ -556,9 +568,14 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
 
 
     private IBAccount getAccountInfo() {
-        IBAccount account = new IBAccount();
-        String accountId = m_acctList.get(0);
         Map<String, AccountSummaryMessage> acctMassages = accountManager.getAccountSummary();
+
+        return GetAccount(acctMassages);
+    }
+
+    private IBAccount GetAccount(Map<String, AccountSummaryMessage> acctMassages){
+        String accountId = m_acctList.get(0);
+        IBAccount account = new IBAccount();
         if (acctMassages == null) return null;
         for (String key : acctMassages.keySet()) {
             if (key.equalsIgnoreCase(
@@ -578,6 +595,5 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
         show(String.format("账户:%s, 账户净值:%s, 账户总现金:%s", account.getAccountID(), String.valueOf(account.getNetLiquidation()), String.valueOf(account.getTotalCash())));
         return account;
     }
-
 
 }

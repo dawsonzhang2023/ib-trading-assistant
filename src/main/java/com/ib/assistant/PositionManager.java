@@ -12,6 +12,7 @@ import com.ib.controller.ApiController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 
 public class PositionManager  implements ApiController.IPositionHandler {
@@ -26,6 +27,27 @@ public class PositionManager  implements ApiController.IPositionHandler {
         this.controller = controller;
         positionList = new ArrayList<>();
     }
+    public void getIbPositionsAsync(Consumer<List<IbPosition>> callback) {
+        // 如果当前没有正在进行的请求，开始一个新的请求
+        if (positionsFuture == null || positionsFuture.isDone()) {
+            positionsFuture = new CompletableFuture<>();
+            positionList.clear(); // 清除之前的结果
+            controller.reqPositions(this);
+
+            // 异步等待结果返回，避免阻塞主线程
+            positionsFuture.thenAccept(positions -> {
+                callback.accept(positions);
+            }).exceptionally(ex -> {
+                ex.printStackTrace();
+                callback.accept(new ArrayList<>()); // 返回一个空的List作为错误处理
+                return null;
+            });
+        } else {
+            // 如果已经有一个正在进行的请求，直接返回现有的future结果
+            positionsFuture.thenAccept(callback);
+        }
+    }
+
     public List<IbPosition> getIbPositions() {
         // 如果当前没有正在进行的请求，开始一个新的请求
         if (positionsFuture == null || positionsFuture.isDone()) {

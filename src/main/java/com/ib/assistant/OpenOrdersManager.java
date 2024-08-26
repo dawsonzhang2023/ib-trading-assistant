@@ -4,11 +4,9 @@ import com.ib.client.*;
 import com.ib.controller.ApiController;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 
 public class OpenOrdersManager implements ApiController.ILiveOrderHandler {
@@ -21,6 +19,27 @@ public class OpenOrdersManager implements ApiController.ILiveOrderHandler {
         this.controller = controller;
         openOrderInfoList = new ArrayList<>();
     }
+    public void getOpenOrderInfoAsync(Consumer<List<OpenOrderInfo>> callback) {
+        // 如果当前没有正在进行的请求，开始一个新的请求
+        if (openOrdersFuture == null || openOrdersFuture.isDone()) {
+            openOrdersFuture = new CompletableFuture<>();
+            openOrderInfoList.clear(); // 清除之前的结果
+            controller.reqLiveOrders(this);
+
+            // 异步等待结果返回，避免阻塞主线程
+            openOrdersFuture.thenAccept(openOrderInfos -> {
+                callback.accept(openOrderInfos);
+            }).exceptionally(ex -> {
+                ex.printStackTrace();
+                callback.accept(new ArrayList<>()); // 返回一个空的List作为错误处理
+                return null;
+            });
+        } else {
+            // 如果已经有一个正在进行的请求，直接返回现有的future结果
+            openOrdersFuture.thenAccept(callback);
+        }
+    }
+
     public List<OpenOrderInfo> getOpenOrderInfo() {
         // 如果当前没有正在进行的请求，开始一个新的请求
         if (openOrdersFuture == null || openOrdersFuture.isDone()) {

@@ -11,6 +11,7 @@ import com.ib.controller.ApiController;
 import java.util.concurrent.CompletableFuture;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class IBAccountManager implements ApiController.IAccountSummaryHandler {
 
@@ -31,6 +32,27 @@ public class IBAccountManager implements ApiController.IAccountSummaryHandler {
         this.controller = controller;
         this.dataView = dataView;
         accountSummaryMessages = new HashMap<>();
+    }
+
+    public void getAccountSummaryAsync(Consumer<Map<String, AccountSummaryMessage>> callback) {
+        // 如果当前没有正在进行的请求，开始一个新的请求
+        if (summaryFuture == null || summaryFuture.isDone()) {
+            // 取消之前的请求（如果有）
+            controller.cancelAccountSummary(this);
+
+            summaryFuture = new CompletableFuture<>();
+            accountSummaryMessages.clear(); // 清除之前的结果
+            controller.reqAccountSummary("All", tags, this);
+
+            // 在另一个线程中等待结果返回，避免阻塞主线程
+            summaryFuture.thenAccept(result -> {
+                callback.accept(result);
+            }).exceptionally(ex -> {
+                ex.printStackTrace();
+                callback.accept(new HashMap<>()); // 返回一个空的Map作为错误处理
+                return null;
+            });
+        }
     }
 
     public Map<String, AccountSummaryMessage> getAccountSummary() {

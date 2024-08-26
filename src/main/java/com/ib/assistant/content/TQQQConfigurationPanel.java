@@ -104,12 +104,12 @@ public class TQQQConfigurationPanel extends Panel {
         //inputPanel.setLayout(new GridLayout(6, 2));
         inputPanel.setLayout(new GridLayout(6, 2, 5, 5));  // 添加行间距和列间距
 
-        JLabel label1 = new JLabel("当前价格 Market Price");
-        JLabel label2 = new JLabel("触发比例 Trigger Ratio");
-        JLabel label3 = new JLabel("规划金额 Planned Amount");
-        JLabel label4 = new JLabel("基金占比 ETF Ratio");
-        JLabel label5 = new JLabel("加仓比例 Increase Ratio");
-        JLabel label6 = new JLabel("负债上限 Debt Ceiling");
+        JLabel label1 = new JLabel("参考价格");
+        JLabel label2 = new JLabel("触发比例");
+        JLabel label3 = new JLabel("规划金额");
+        JLabel label4 = new JLabel("基金占比");
+        JLabel label5 = new JLabel("加仓比例");
+        JLabel label6 = new JLabel("负债上限");
 
         label1.setBackground(Color.white);
         label2.setBackground(Color.white);
@@ -149,7 +149,7 @@ public class TQQQConfigurationPanel extends Panel {
         inputPanel.add(debtLimitField);
 
         JPanel panelCenter = new JPanel();
-        saveButton = new JButton("保存配置文件 Save Configuration");
+        saveButton = new JButton("保存配置文件");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
