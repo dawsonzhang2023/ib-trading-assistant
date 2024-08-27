@@ -263,17 +263,11 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                     if (price >= currentConfig.getUpTriggerPrice() || price <= currentConfig.getDownTriggerPrice()) {
                         // 大于上限 或者 小于下限 调整仓位
                         show("价格触发调仓");
-
-                       // adjustPosition();
                         accountManager.getAccountSummaryAsync(acctMassages -> {
                             IBAccount account = GetAccount(acctMassages);
-                            show("1/3 获取用户信息");
                             positionManager.getIbPositionsAsync(positions -> {
-                                List<IbPosition> positionList = positions;
-                                show("2/3 获取position");
-                                openOrdersManager.getOpenOrderInfoAsync(openOrderInfos -> {
-                                    List<OpenOrdersManager.OpenOrderInfo> orders = openOrderInfos;
-                                    show("3/3 获取pending order");
+                                openOrdersManager.getOpenOrderInfoAsync(openOrderInfo -> {
+                                    adjustPosition(account, positions, openOrderInfo);
                                 });
                             });
                         });
@@ -350,7 +344,15 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (isConnected) {
-                    adjustPosition();
+                    show("手工触发调仓");
+                    accountManager.getAccountSummaryAsync(acctMassages -> {
+                        IBAccount account = GetAccount(acctMassages);
+                        positionManager.getIbPositionsAsync(positions -> {
+                            openOrdersManager.getOpenOrderInfoAsync(openOrderInfo -> {
+                                adjustPosition(account, positions, openOrderInfo);
+                            });
+                        });
+                    });
                 } else {
                     show("尚未连接IB, 请先连接本地IB");
                 }
@@ -364,7 +366,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
 
     private boolean isExecuting = false;
 
-    private void adjustPosition() {
+    private void adjustPosition(IBAccount account, List<IbPosition> positions,  List<OpenOrdersManager.OpenOrderInfo> orderInfoList) {
         show("*************开始仓位调整*************");
         synchronized (executionLock) {
             if (isExecuting) {
@@ -393,20 +395,19 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                 show("无效价格，不执行任何操作！");
                 return;
             }
-            IBAccount account = getAccountInfo();
+
             if (account == null || account.getAccountID() == null || !m_acctList.get(0).endsWith(String.valueOf(currentConfig.getClientId()))  || currentConfig.getClientId()==0) {
                 show("用户编号与TWS用户不一致，不执行任何操作！ TWS用户编号:");
                 return;
             }
             // "已经存在待执行订单，暂时退出等待..."
-            boolean hasPendingOrder = isPendingOrder(symbol, account.getAccountID());
+            boolean hasPendingOrder = isPendingOrder(symbol, account.getAccountID(), orderInfoList);
             if (hasPendingOrder) {
                 show("仍有待执行订单，暂不操作!");
                 return;
             }
             DecimalFormat df = new DecimalFormat("0.00");
-            // 仓位验证
-            List<IbPosition> positions = positionManager.getIbPositions();
+
             // Get ETF  position
             Long currentTQQQETFPosition = positions.stream().filter(p -> {
                 return (symbol.equals(p.getContract().symbol()) && "STK".equals(p.getContract().getSecType()) && account.getAccountID().equals(p.getAccountID()));
@@ -569,10 +570,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
         controller().placeOrModifyOrder(contract, order, orderHandler);
     }
 
-    //"已经存在待执行订单，暂时退出等待..."
-    private boolean isPendingOrder(String symbol, String accountId) {
-
-        List<OpenOrdersManager.OpenOrderInfo> orderInfoList = openOrdersManager.getOpenOrderInfo();
+    private boolean isPendingOrder(String symbol, String accountId, List<OpenOrdersManager.OpenOrderInfo> orderInfoList) {
         return orderInfoList.stream().filter(new Predicate<OpenOrdersManager.OpenOrderInfo>() {
             @Override
             public boolean test(OpenOrdersManager.OpenOrderInfo openOrderInfo) {
@@ -582,6 +580,13 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                         ;
             }
         }).count() > 0;
+    }
+
+    //"已经存在待执行订单，暂时退出等待..."
+    private boolean isPendingOrder(String symbol, String accountId) {
+
+        List<OpenOrdersManager.OpenOrderInfo> orderInfoList = openOrdersManager.getOpenOrderInfo();
+        return isPendingOrder(symbol, accountId, orderInfoList);
     }
 
 
