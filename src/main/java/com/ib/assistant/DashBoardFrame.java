@@ -17,6 +17,8 @@ import com.ib.controller.ApiController;
 import com.ib.controller.Formats;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
+import java.time.LocalDate;
+
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -67,7 +69,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
     public void connected() {
         show("connected");
         //m_connectionPanel.m_status.setText( "connected");
-        headerPanel.getConnectionPanel().getStatusLabel().setText("连接 Connected");
+        headerPanel.getConnectionPanel().getStatusLabel().setText("连接");
         TQQQConfigurationPanel configurationPanel = contentPanel.getConfigPanel();
         TQQQConfiguration configuration = configurationPanel.getConfiguration();
 
@@ -91,14 +93,14 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
         });
 
         isConnected = true;
-        headerPanel.getConnectionPanel().connectButton.setText("断开连接 Disconnect");
+        headerPanel.getConnectionPanel().connectButton.setText("断开连接");
     }
 
     @Override
     public void disconnected() {
         show("disconnected");
-        headerPanel.getConnectionPanel().getStatusLabel().setText("中断 Disconnected");
-        headerPanel.getConnectionPanel().connectButton.setText("连接 Connect");
+        headerPanel.getConnectionPanel().getStatusLabel().setText("中断");
+        headerPanel.getConnectionPanel().connectButton.setText("连接");
         isConnected = false;
     }
 
@@ -200,6 +202,16 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
         connectionPanel.connectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // 获取当前日期
+                LocalDate currentDate = LocalDate.now();
+                // 定义截止日期
+                LocalDate cutoffDate = LocalDate.of(2025, 6, 30);
+                // 判断当前日期是否超过截止日期
+                if (currentDate.isAfter(cutoffDate)) {
+                    JOptionPane.showMessageDialog(null, "请联系明瑞客服升级软件！", "Warning", JOptionPane.WARNING_MESSAGE);
+                    show("请联系明瑞客服升级软件！");
+                    return;
+                }
                 if (!isConnected) {
                     int port = Integer.parseInt(connectionPanel.m_port.getText());
                     int clientId = Integer.parseInt(connectionPanel.m_clientId.getText());
