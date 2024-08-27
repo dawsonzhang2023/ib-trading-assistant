@@ -1,7 +1,6 @@
 package com.ib.assistant.panels;
 
 import apidemo.util.HtmlButton;
-import apidemo.util.NewTabbedPanel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -56,14 +55,9 @@ public class FooterPanel extends JPanel {
 
         JScrollPane msgScroll = new JScrollPane(m_msg);
 
-
-       // msgScroll.setPreferredSize(new Dimension(1600, 200));
-
         JScrollPane outLogScroll = new JScrollPane(m_outLog);
-        //outLogScroll.setPreferredSize(new Dimension(1600, 200));
 
         JScrollPane inLogScroll = new JScrollPane(m_inLog);
-        //inLogScroll.setPreferredSize(new Dimension(1600, 200));
 
         JTabbedPane bot = new JTabbedPane();
         bot.setPreferredSize(new Dimension(800 , 200));
@@ -73,6 +67,5 @@ public class FooterPanel extends JPanel {
 
         add(bot , BorderLayout.CENTER);
         add(clearBtn , BorderLayout.SOUTH);
-
     }
 }

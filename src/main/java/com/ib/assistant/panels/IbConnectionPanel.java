@@ -44,17 +44,9 @@ public class IbConnectionPanel extends JPanel {
         m_port = new JTextField(m_connectionConfiguration.getDefaultPort(), 7);
         m_connectOptionsTF = new JTextField(m_connectionConfiguration.getDefaultConnectOptions(), 30);
 
-
-
-
         connectButton = new JButton("连接");
         connectButton.setPreferredSize(new Dimension( 100 ,  30));
-       /* JButton disconnect = new JButton("Disconnect") {
-            @Override
-            public void actionPerformed() {
-                // controller().disconnect();
-            }
-        };*/
+
 
         JPanel p1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
         p1.add(new JLabel("服务器 Server"));
@@ -68,13 +60,8 @@ public class IbConnectionPanel extends JPanel {
             p1.add("Connect options", m_connectOptionsTF);
         }
         p1.add(connectButton);
-        //p1.add("", m_defaultPortNumberLabel);
-        //p1.add("" , expireDateLabel );
 
         JPanel p2 = new VerticalPanel();
-        //p2.add(connectButton);
-        //p2.add( disconnect);
-        //p2.add(Box.createVerticalStrut(40));
 
         JPanel p3 = new VerticalPanel();
         p3.setBorder(new EmptyBorder(0, 0, 0, 0));

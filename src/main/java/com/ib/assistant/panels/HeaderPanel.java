@@ -6,11 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class HeaderPanel extends JPanel {
-
     private  IbConnectionPanel  connectionPanel = null ;
-
     private  ControlsPanel  controlsPanel = null ;
-
     public IbConnectionPanel getConnectionPanel() {
         return connectionPanel;
     }
@@ -32,15 +29,12 @@ public class HeaderPanel extends JPanel {
 
         controlsPanel = new ControlsPanel();
 
-
         leftHeader.add(label);
-        //leftHeader.add(labelEnglish);
         leftHeader.add(controlsPanel);
 
         connectionPanel= new IbConnectionPanel();
         connectionPanel.setPreferredSize(new Dimension(400, 100));
         add(leftHeader);
         add(connectionPanel);
-
     }
 }

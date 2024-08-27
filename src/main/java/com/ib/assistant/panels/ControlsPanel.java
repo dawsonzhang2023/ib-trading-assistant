@@ -25,20 +25,16 @@ public class ControlsPanel extends JPanel {
 
     public ControlsPanel() {
         setLayout(new FlowLayout(FlowLayout.LEADING));
-        startButton = new JButton("开始 Start");
-        pauseButton = new JButton("暂停 Pause");
+        startButton = new JButton("开始");
+        pauseButton = new JButton("暂停");
         JPanel p1 = new JPanel(new FlowLayout(FlowLayout.LEADING));
         p1.setPreferredSize(new Dimension(360, 50));
         p1.add(startButton);
         p1.add(pauseButton);
 
 
-        manualButton = new JButton("手动 Manual");
-
+        manualButton = new JButton("手动触发");
         p1.add(manualButton);
-
         add(p1);
-
-
     }
 }

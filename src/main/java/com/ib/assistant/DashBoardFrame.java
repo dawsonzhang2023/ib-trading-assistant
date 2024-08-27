@@ -266,9 +266,16 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
 
                        // adjustPosition();
                         accountManager.getAccountSummaryAsync(acctMassages -> {
-                            // 在这里进行调仓操作
-                            // adjustPosition();
                             IBAccount account = GetAccount(acctMassages);
+                            show("1/3 获取用户信息");
+                            positionManager.getIbPositionsAsync(positions -> {
+                                List<IbPosition> positionList = positions;
+                                show("2/3 获取position");
+                                openOrdersManager.getOpenOrderInfoAsync(openOrderInfos -> {
+                                    List<OpenOrdersManager.OpenOrderInfo> orders = openOrderInfos;
+                                    show("3/3 获取pending order");
+                                });
+                            });
                         });
                     }
                 }
@@ -326,7 +333,6 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                             });
                         });
                     });
-
                 }
             }
         });
