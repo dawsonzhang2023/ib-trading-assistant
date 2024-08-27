@@ -460,7 +460,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
             if (currentMarketValue < currentConfig.getPlanAmount()) {
                 show(String.format("执行加仓:当前TQQQ市场价格 {%s} 小于 {%s}(规划金额)",
                         String.valueOf(df.format(currentMarketValue)),
-                        String.valueOf(df.format(currentTQQQIdealAmount))
+                        String.valueOf(df.format(currentConfig.getPlanAmount()))
                 ));
                 // ((规划金额 - 基金市值) x 加仓比例)
                 double compareValue1 = (currentConfig.getPlanAmount() - currentMarketValue) * currentConfig.getAddRate();
