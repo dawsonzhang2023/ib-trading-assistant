@@ -1,2 +1,116 @@
 2024-08-08 08:20:09 INFO  DashBoardFrame:144 - -1 504 Not connected
 2024-08-08 08:20:21 INFO  DashBoardFrame:144 - -1 502 Couldn't connect to TWS. Confirm that "Enable ActiveX and Socket Clients" is enabled and connection port is the same as "Socket Port" on the TWS "Edit->Global Configuration...->API->Settings" menu. Live Trading ports: TWS: 7496; IB Gateway: 4001. Simulated Trading ports for new installations of version 954.1 or newer: TWS: 7497; IB Gateway: 4002
+2024-10-14 09:25:33 INFO  DashBoardFrame:139 - connected
+2024-10-14 09:25:33 INFO  DashBoardFrame:139 - Received account list
+2024-10-14 09:25:33 INFO  DashBoardFrame:139 - -1 2104 Market data farm connection is OK:usfarm.nj
+2024-10-14 09:25:33 INFO  DashBoardFrame:139 - -1 2104 Market data farm connection is OK:hfarm
+2024-10-14 09:25:33 INFO  DashBoardFrame:139 - -1 2104 Market data farm connection is OK:jfarm
+2024-10-14 09:25:33 INFO  DashBoardFrame:139 - -1 2104 Market data farm connection is OK:usfuture
+2024-10-14 09:25:33 INFO  DashBoardFrame:139 - -1 2104 Market data farm connection is OK:cashfarm
+2024-10-14 09:25:33 INFO  DashBoardFrame:139 - -1 2104 Market data farm connection is OK:eufarmnj
+2024-10-14 09:25:33 INFO  DashBoardFrame:139 - -1 2104 Market data farm connection is OK:usfarm
+2024-10-14 09:25:33 INFO  DashBoardFrame:139 - -1 2106 HMDS data farm connection is OK:euhmds
+2024-10-14 09:25:33 INFO  DashBoardFrame:139 - -1 2106 HMDS data farm connection is OK:fundfarm
+2024-10-14 09:25:33 INFO  DashBoardFrame:139 - -1 2106 HMDS data farm connection is OK:ushmds
+2024-10-14 09:25:33 INFO  DashBoardFrame:139 - -1 2158 Sec-def data farm connection is OK:secdefil
+2024-10-14 09:25:33 INFO  DashBoardFrame:139 - Server date/time is 20241014-09:25:33
+2024-10-14 09:25:42 INFO  DashBoardFrame:139 - Delayed market data type is enabled, Delayed-Frozen market data type is disabled
+2024-10-14 09:25:42 INFO  DashBoardFrame:139 - 账户:DU6083323, 账户净值:316585.62, 账户总现金:236036.49
+2024-10-14 09:25:42 INFO  DashBoardFrame:139 - 10001393 10167 Requested market data is not subscribed. Displaying delayed market data.
+2024-10-14 09:25:43 INFO  DashBoardFrame:139 - 价格触发调仓
+2024-10-14 09:25:43 INFO  DashBoardFrame:139 - 账户:DU6083323, 账户净值:316585.62, 账户总现金:236036.49
+2024-10-14 09:25:43 INFO  DashBoardFrame:139 - *************开始仓位调整*************
+2024-10-14 09:25:43 INFO  DashBoardFrame:139 - UPRO规划市值(净资产总市值 x 基金占比)31658.56 = 净资产总市值316585.62 * 基金占比 0.10 
+2024-10-14 09:25:43 INFO  DashBoardFrame:139 - 当前{UPRO}市场金额: {0.00}. 当前持仓： {0.00} 当前市场价格： {88.95}
+2024-10-14 09:25:43 INFO  DashBoardFrame:139 - 执行加仓:当前{UPRO}市场价格 {0.00} 小于 {45534.01}(规划金额)
+2024-10-14 09:25:43 INFO  DashBoardFrame:139 - 市值1((规划金额 - 基金市值) x 加仓比例):{45078.67} ((规划金额{45534.01}  - 基金市值{0.00}) x 加仓比例{0.99}) 
+2024-10-14 09:25:43 INFO  DashBoardFrame:139 - 市值2(现金总市值 + 负债上限)：{436036.49} 现金总市值{236036.49} + 负债上限{200000.00}
+2024-10-14 09:25:43 INFO  DashBoardFrame:139 - 加仓金额为市值1: 45078.67
+2024-10-14 09:25:43 INFO  DashBoardFrame:139 - 买入UPRO:507
+2024-10-14 09:25:43 INFO  DashBoardFrame:139 - *************结束仓位调整*************
+2024-10-14 09:26:06 INFO  DashBoardFrame:139 - 手工触发调仓
+2024-10-14 09:26:06 INFO  DashBoardFrame:139 - 账户:DU6083323, 账户净值:316589.56, 账户总现金:236036.45
+2024-10-14 09:26:06 INFO  DashBoardFrame:139 - *************开始仓位调整*************
+2024-10-14 09:26:06 INFO  DashBoardFrame:139 - 仍有待执行订单，暂不操作!
+2024-10-14 09:26:06 INFO  DashBoardFrame:139 - *************结束仓位调整*************
+2024-10-14 09:26:09 INFO  DashBoardFrame:139 - disconnected
+2024-10-14 09:26:09 INFO  DashBoardFrame:139 - disconnected
+2024-10-14 09:29:02 INFO  DashBoardFrame:139 - Received account list
+2024-10-14 09:29:02 INFO  DashBoardFrame:139 - connected
+2024-10-14 09:29:02 INFO  DashBoardFrame:139 - -1 2104 Market data farm connection is OK:usfarm
+2024-10-14 09:29:02 INFO  DashBoardFrame:139 - -1 2106 HMDS data farm connection is OK:euhmds
+2024-10-14 09:29:02 INFO  DashBoardFrame:139 - -1 2106 HMDS data farm connection is OK:fundfarm
+2024-10-14 09:29:02 INFO  DashBoardFrame:139 - -1 2106 HMDS data farm connection is OK:ushmds
+2024-10-14 09:29:02 INFO  DashBoardFrame:139 - -1 2158 Sec-def data farm connection is OK:secdefil
+2024-10-14 09:29:02 INFO  DashBoardFrame:139 - Server date/time is 20241014-09:29:02
+2024-10-14 09:29:04 INFO  DashBoardFrame:139 - Delayed market data type is enabled, Delayed-Frozen market data type is disabled
+2024-10-14 09:29:04 INFO  DashBoardFrame:139 - 账户:DU6083323, 账户净值:316578.56, 账户总现金:236036.45
+2024-10-14 09:29:15 INFO  DashBoardFrame:139 - 手工触发调仓
+2024-10-14 09:29:15 INFO  DashBoardFrame:139 - 账户:DU6083323, 账户净值:316578.56, 账户总现金:236036.45
+2024-10-14 09:29:15 INFO  DashBoardFrame:139 - *************开始仓位调整*************
+2024-10-14 09:29:15 INFO  DashBoardFrame:139 - UPRO规划市值(净资产总市值 x 基金占比)31657.86 = 净资产总市值316578.56 * 基金占比 0.10 
+2024-10-14 09:29:15 INFO  DashBoardFrame:139 - 当前{UPRO}市场金额: {32207.14}. 当前持仓： {362.00} 当前市场价格： {88.97}
+2024-10-14 09:29:15 INFO  DashBoardFrame:139 - 执行加仓:当前{UPRO}市场价格 {32207.14} 小于 {45534.01}(规划金额)
+2024-10-14 09:29:15 INFO  DashBoardFrame:139 - 市值1((规划金额 - 基金市值) x 加仓比例):{13193.60} ((规划金额{45534.01}  - 基金市值{32207.14}) x 加仓比例{0.99}) 
+2024-10-14 09:29:15 INFO  DashBoardFrame:139 - 市值2(现金总市值 + 负债上限)：{436036.45} 现金总市值{236036.45} + 负债上限{200000.00}
+2024-10-14 09:29:15 INFO  DashBoardFrame:139 - 加仓金额为市值1: 13193.60
+2024-10-14 09:29:15 INFO  DashBoardFrame:139 - 买入UPRO:148
+2024-10-14 09:29:15 INFO  DashBoardFrame:139 - *************结束仓位调整*************
+2024-10-14 09:29:37 INFO  DashBoardFrame:139 - 下单状态: 202 信息: Order Canceled - reason:
+2024-10-14 09:29:37 INFO  DashBoardFrame:139 - 1394 202 Order Canceled - reason:
+2024-10-14 09:30:09 INFO  DashBoardFrame:139 - disconnected
+2024-10-14 09:30:09 INFO  DashBoardFrame:139 - disconnected
+2024-10-14 09:30:10 INFO  DashBoardFrame:139 - connected
+2024-10-14 09:30:10 INFO  DashBoardFrame:139 - -1 2104 Market data farm connection is OK:usfarm
+2024-10-14 09:30:10 INFO  DashBoardFrame:139 - -1 2106 HMDS data farm connection is OK:euhmds
+2024-10-14 09:30:10 INFO  DashBoardFrame:139 - Received account list
+2024-10-14 09:30:10 INFO  DashBoardFrame:139 - -1 2106 HMDS data farm connection is OK:fundfarm
+2024-10-14 09:30:10 INFO  DashBoardFrame:139 - -1 2106 HMDS data farm connection is OK:ushmds
+2024-10-14 09:30:10 INFO  DashBoardFrame:139 - -1 2158 Sec-def data farm connection is OK:secdefil
+2024-10-14 09:30:10 INFO  DashBoardFrame:139 - Server date/time is 20241014-09:30:10
+2024-10-14 09:30:18 INFO  DashBoardFrame:139 - 手工触发调仓
+2024-10-14 09:30:18 INFO  DashBoardFrame:139 - 账户:DU6083323, 账户净值:316551.49, 账户总现金:236036.39
+2024-10-14 09:30:18 INFO  DashBoardFrame:139 - *************开始仓位调整*************
+2024-10-14 09:30:18 INFO  DashBoardFrame:139 - UPRO规划市值(净资产总市值 x 基金占比)47482.72 = 净资产总市值316551.49 * 基金占比 0.15 
+2024-10-14 09:30:18 INFO  DashBoardFrame:139 - 重置最新规划金额为 {47482.72} : 原有规划金额 {45534.01}
+2024-10-14 09:30:18 INFO  DashBoardFrame:139 - 当前{UPRO}市场金额: {32221.62}. 当前持仓： {362.00} 当前市场价格： {89.01}
+2024-10-14 09:30:18 INFO  DashBoardFrame:139 - 执行加仓:当前{UPRO}市场价格 {32221.62} 小于 {47482.72}(规划金额)
+2024-10-14 09:30:18 INFO  DashBoardFrame:139 - 市值1((规划金额 - 基金市值) x 加仓比例):{15108.49} ((规划金额{47482.72}  - 基金市值{32221.62}) x 加仓比例{0.99}) 
+2024-10-14 09:30:18 INFO  DashBoardFrame:139 - 市值2(现金总市值 + 负债上限)：{436036.39} 现金总市值{236036.39} + 负债上限{200000.00}
+2024-10-14 09:30:18 INFO  DashBoardFrame:139 - 加仓金额为市值1: 15108.49
+2024-10-14 09:30:18 INFO  DashBoardFrame:139 - 买入UPRO:170
+2024-10-14 09:30:18 INFO  DashBoardFrame:139 - *************结束仓位调整*************
+2024-10-14 09:32:08 INFO  DashBoardFrame:139 - connected
+2024-10-14 09:32:08 INFO  DashBoardFrame:139 - Received account list
+2024-10-14 09:32:08 INFO  DashBoardFrame:139 - -1 2104 Market data farm connection is OK:usfarm
+2024-10-14 09:32:08 INFO  DashBoardFrame:139 - -1 2106 HMDS data farm connection is OK:euhmds
+2024-10-14 09:32:08 INFO  DashBoardFrame:139 - -1 2106 HMDS data farm connection is OK:fundfarm
+2024-10-14 09:32:08 INFO  DashBoardFrame:139 - -1 2106 HMDS data farm connection is OK:ushmds
+2024-10-14 09:32:08 INFO  DashBoardFrame:139 - -1 2158 Sec-def data farm connection is OK:secdefil
+2024-10-14 09:32:08 INFO  DashBoardFrame:139 - Server date/time is 20241014-09:32:07
+2024-10-14 09:32:10 INFO  DashBoardFrame:139 - Delayed market data type is enabled, Delayed-Frozen market data type is disabled
+2024-10-14 09:32:10 INFO  DashBoardFrame:139 - 价格触发调仓
+2024-10-14 09:32:10 INFO  DashBoardFrame:139 - 账户:DU6083323, 账户净值:316464.27, 账户总现金:220922.41
+2024-10-14 09:32:39 INFO  DashBoardFrame:139 - 手工触发调仓
+2024-10-14 09:32:39 INFO  DashBoardFrame:139 - 账户:DU6083323, 账户净值:316464.27, 账户总现金:220922.41
+2024-10-14 09:32:39 INFO  DashBoardFrame:139 - *************开始仓位调整*************
+2024-10-14 09:32:39 INFO  DashBoardFrame:139 - UPRO规划市值(净资产总市值 x 基金占比)47469.64 = 净资产总市值316464.27 * 基金占比 0.15 
+2024-10-14 09:32:39 INFO  DashBoardFrame:139 - 当前{UPRO}市场金额: {47353.32}. 当前持仓： {532.00} 当前市场价格： {89.01}
+2024-10-14 09:32:39 INFO  DashBoardFrame:139 - 执行加仓:当前{UPRO}市场价格 {47353.32} 小于 {47482.72}(规划金额)
+2024-10-14 09:32:39 INFO  DashBoardFrame:139 - 市值1((规划金额 - 基金市值) x 加仓比例):{128.11} ((规划金额{47482.72}  - 基金市值{47353.32}) x 加仓比例{0.99}) 
+2024-10-14 09:32:39 INFO  DashBoardFrame:139 - 市值2(现金总市值 + 负债上限)：{420922.41} 现金总市值{220922.41} + 负债上限{200000.00}
+2024-10-14 09:32:39 INFO  DashBoardFrame:139 - 加仓金额为市值1: 128.11
+2024-10-14 09:32:39 INFO  DashBoardFrame:139 - 买入UPRO:1
+2024-10-14 09:32:39 INFO  DashBoardFrame:139 - *************结束仓位调整*************
+2024-10-14 09:35:06 INFO  DashBoardFrame:139 - 手工触发调仓
+2024-10-14 09:35:06 INFO  DashBoardFrame:139 - 账户:DU6083323, 账户净值:316593.88, 账户总现金:220832.57
+2024-10-14 09:35:06 INFO  DashBoardFrame:139 - *************开始仓位调整*************
+2024-10-14 09:35:06 INFO  DashBoardFrame:139 - UPRO规划市值(净资产总市值 x 基金占比)47489.08 = 净资产总市值316593.88 * 基金占比 0.15 
+2024-10-14 09:35:06 INFO  DashBoardFrame:139 - 重置最新规划金额为 {47489.08} : 原有规划金额 {47482.72}
+2024-10-14 09:35:06 INFO  DashBoardFrame:139 - 当前{UPRO}市场金额: {47437.00}. 当前持仓： {533.00} 当前市场价格： {89.00}
+2024-10-14 09:35:06 INFO  DashBoardFrame:139 - 执行加仓:当前{UPRO}市场价格 {47437.00} 小于 {47489.08}(规划金额)
+2024-10-14 09:35:06 INFO  DashBoardFrame:139 - 市值1((规划金额 - 基金市值) x 加仓比例):{51.56} ((规划金额{47489.08}  - 基金市值{47437.00}) x 加仓比例{0.99}) 
+2024-10-14 09:35:06 INFO  DashBoardFrame:139 - 市值2(现金总市值 + 负债上限)：{420832.57} 现金总市值{220832.57} + 负债上限{200000.00}
+2024-10-14 09:35:06 INFO  DashBoardFrame:139 - 加仓金额为市值1: 51.56
+2024-10-14 09:35:06 INFO  DashBoardFrame:139 - 金额差异小于100，不执行任何操作
+2024-10-14 09:35:06 INFO  DashBoardFrame:139 - *************结束仓位调整*************

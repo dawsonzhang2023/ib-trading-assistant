@@ -27,7 +27,7 @@ public class IBKRTickDataExample extends EWrapperImpl {
 
     public void requestData() {
         Contract contract = new Contract();
-        contract.symbol("TQQQ");
+        contract.symbol("UPRO");
         contract.secType("STK");
         contract.exchange("SMART");
         contract.currency("USD");

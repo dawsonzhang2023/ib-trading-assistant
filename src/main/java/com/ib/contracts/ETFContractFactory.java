@@ -15,7 +15,7 @@ public class ETFContractFactory {
 
     public Contract getContractBySymbol( String symbol) {
         switch (symbol){
-            case "TQQQ":
+            case "UPRO":
                 Contract  contract = new Contract() ;
                 contract.symbol( symbol );
                 contract.secType("STK");

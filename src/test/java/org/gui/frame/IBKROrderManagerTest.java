@@ -8,7 +8,7 @@ public class IBKROrderManagerTest {
     public static void main(String[] args) {
 
         String hostname = "localhost";
-        String symbol = "TQQQ";
+        String symbol = "UPRO";
 
         ApiController controller = ApiControllerFactory.getInstance().getController();
         controller.connect(hostname, 7497, 0, null);

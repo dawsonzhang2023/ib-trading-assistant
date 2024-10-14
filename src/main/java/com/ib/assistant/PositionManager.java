@@ -67,7 +67,7 @@ public class PositionManager  implements ApiController.IPositionHandler {
 
     @Override
     public void position(String account, Contract contract, Decimal pos, double avgCost) {
-        if (pos.compareTo(Decimal.ZERO) > 0 && contract.symbol().equals("TQQQ")) {
+        if (pos.compareTo(Decimal.ZERO) > 0 && contract.symbol().equals("UPRO")) {
             // 清除之前的TQQQ仓位并更新
             positionList.clear();
             IbPosition ibPosition = new IbPosition(account, contract, pos, avgCost);

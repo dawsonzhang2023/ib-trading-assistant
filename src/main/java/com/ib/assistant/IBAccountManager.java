@@ -97,7 +97,7 @@ public class IBAccountManager implements ApiController.IAccountSummaryHandler {
 
     private void updateAccountTQQQ(AccountSummaryMessage accountSummaryMessage) {
         MarketDataModel dataModel = dataView.getDataModel();
-        String symbol = "TQQQ";
+        String symbol = "UPRO";
         Contract contract = ETFContractFactory.getInstance().getContractBySymbol(symbol);
         String securityCode = MarketDataUtil.convertContractToSecurityCode(contract);
         MarketDataModel.MarketDataStruct  dataRow = dataModel.findDataRowBySecurityCode(securityCode);
