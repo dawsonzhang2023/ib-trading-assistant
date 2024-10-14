@@ -38,7 +38,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
 
     private ApiController m_controller;
 
-    private static final String symbol = "TQQQ";
+    private static final String symbol = "UPRO";
 
     private MarketDataManger marketDataManger;
 
@@ -313,7 +313,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
                     show("配置文件读取错误:" + ex.getMessage());
                     return;
                 }
-                if (!verifyTQQQConfiguration(currentConfig)) return;
+                if (!verifyEtfConfiguration(currentConfig)) return;
                 if (isConnected && !marketDataManger.isActive()) {
                     marketDataManger.setActive(true);
                     Contract contract = ETFContractFactory.getInstance().getContractBySymbol(symbol);
@@ -386,7 +386,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
             return;
         }
 
-        if (!verifyTQQQConfiguration(currentConfig)) {
+        if (!verifyEtfConfiguration(currentConfig)) {
             return;
         }
 
@@ -409,24 +409,25 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
             DecimalFormat df = new DecimalFormat("0.00");
 
             // Get ETF  position
-            Long currentTQQQETFPosition = positions.stream().filter(p -> {
+            Long currentEtfPosition = positions.stream().filter(p -> {
                 return (symbol.equals(p.getContract().symbol()) && "STK".equals(p.getContract().getSecType()) && account.getAccountID().equals(p.getAccountID()));
             }).mapToLong(p -> p.getPosition().longValue()).sum();
 
             //  (净资产总市值 x 基金占比)，大于现有规划金额，则将其重置为规划金额
-            double currentTQQQIdealAmount = account.getNetLiquidation() * currentConfig.getFundRate();
-            show(String.format("TQQQ规划市值(净资产总市值 x 基金占比)%s = 净资产总市值%s * 基金占比 %s ",
-                    String.valueOf(df.format(currentTQQQIdealAmount)),
+            double currentEtfIdealAmount = account.getNetLiquidation() * currentConfig.getFundRate();
+            show(String.format("%s规划市值(净资产总市值 x 基金占比)%s = 净资产总市值%s * 基金占比 %s ",
+                    symbol,
+                    String.valueOf(df.format(currentEtfIdealAmount)),
                     String.valueOf(df.format(account.getNetLiquidation())),
                     String.valueOf(df.format(currentConfig.getFundRate()))
             ));
-            if (currentTQQQIdealAmount > currentConfig.getPlanAmount()) {
+            if (currentEtfIdealAmount > currentConfig.getPlanAmount()) {
                 show(String.format("重置最新规划金额为 {%s} : 原有规划金额 {%s}",
-                        String.valueOf(df.format(currentTQQQIdealAmount)),
+                        String.valueOf(df.format(currentEtfIdealAmount)),
                         String.valueOf(df.format(currentConfig.getPlanAmount()))
                 ));
-                currentConfig.setPlanAmount(currentTQQQIdealAmount);
-                configurationPanel.planAmtField.setText(df.format(currentTQQQIdealAmount));
+                currentConfig.setPlanAmount(currentEtfIdealAmount);
+                configurationPanel.planAmtField.setText(df.format(currentEtfIdealAmount));
                 configurationPanel.updateConfig(currentConfig);
             }
 
@@ -435,15 +436,17 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
             double diff = 0.0d;
 
             // 基金市值高于最新规划金额的部分，为本次减仓金额。
-            double currentMarketValue = currentTQQQETFPosition * marketDataManger.getLastPrice();
-            show(String.format("当前TQQQ市场金额: {%s}. 当前持仓： {%s} 当前市场价格： {%s}",
+            double currentMarketValue = currentEtfPosition * marketDataManger.getLastPrice();
+            show(String.format("当前{%s}市场金额: {%s}. 当前持仓： {%s} 当前市场价格： {%s}",
+                    symbol,
                     String.valueOf(df.format(currentMarketValue)),
-                    String.valueOf(df.format(currentTQQQETFPosition)),
+                    String.valueOf(df.format(currentEtfPosition)),
                     String.valueOf(df.format(marketDataManger.getLastPrice()))
             ));
 
             if (currentMarketValue > currentConfig.getPlanAmount()) {
-                show(String.format("执行减仓:当前TQQQ市场价格{%s}大于{%s}最新规划金额",
+                show(String.format("执行减仓:当前{%s}市场价格{%s}大于{%s}最新规划金额",
+                        symbol,
                         String.valueOf(df.format(currentMarketValue)),
                         String.valueOf(df.format(currentConfig.getPlanAmount()))
                 ));
@@ -458,7 +461,8 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
 
             // currentMarketValue < 规划金额
             if (currentMarketValue < currentConfig.getPlanAmount()) {
-                show(String.format("执行加仓:当前TQQQ市场价格 {%s} 小于 {%s}(规划金额)",
+                show(String.format("执行加仓:当前{%s}市场价格 {%s} 小于 {%s}(规划金额)",
+                        symbol,
                         String.valueOf(df.format(currentMarketValue)),
                         String.valueOf(df.format(currentConfig.getPlanAmount()))
                 ));
@@ -504,10 +508,10 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
             // 开仓下单
             Integer positionAmt = Math.toIntExact(Math.round(diff / marketDataManger.getLastPrice()));
             if (action == Types.Action.BUY) {
-                show("买入TQQQ:" + positionAmt);
+                show("买入"+symbol+":" + positionAmt);
                 PlaceOrder(action, positionAmt);
             } else if (action == Types.Action.SELL) {
-                show("卖出TQQQ:" + positionAmt);
+                show("卖出"+symbol+":" + positionAmt);
                 PlaceOrder(action, positionAmt);
             } else {
                 show("不执行任何操作");
@@ -528,7 +532,7 @@ public class DashBoardFrame extends JFrame implements ApiController.IConnectionH
         }
     }
 
-    private boolean verifyTQQQConfiguration(TQQQConfiguration currentConfig) {
+    private boolean verifyEtfConfiguration(TQQQConfiguration currentConfig) {
         Boolean isConfigured = true;
         if (currentConfig.getReferencePrice() == 0) {
             show("配置文件:参考价格错误");
